@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.scheduler.model.ToDo;
 import com.kh.scheduler.model.ToDoAdapter;
+import com.kh.scheduler.model.ToDoRequest;
 import com.kh.scheduler.model.ToDoResponse;
 import com.kh.scheduler.service.ToDoService;
 
@@ -28,6 +30,29 @@ public class ToDoController {
 		
 		try {
 			toDo = toDoService.get(id);
+		} catch (final Exception e) {
+			errors.add(e.getMessage());
+		}
+		return ToDoAdapter.toToDoResponse(toDo, errors);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/todo")
+	public @ResponseBody List<ToDoResponse> getAll() {
+		List<String> errors = new ArrayList<>();
+		List<ToDo> toDoList = toDoService.getAll();
+		List<ToDoResponse> toDoResponses = new ArrayList<>();
+		toDoList.stream().forEach(toDo -> {
+			toDoResponses.add(ToDoAdapter.toToDoResponse(toDo, errors));
+		});
+		return toDoResponses;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/todo")
+	public @ResponseBody ToDoResponse create(@RequestBody final ToDoRequest toDoRequest) {
+		List<String> errors = new ArrayList<>();
+		ToDo toDo = ToDoAdapter.toToDo(toDoRequest);
+		try {
+			toDo = toDoService.create(toDo);
 		} catch (final Exception e) {
 			errors.add(e.getMessage());
 		}
