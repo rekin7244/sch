@@ -5,19 +5,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import springfox.documentation.annotations.ApiIgnore;
 
-@Controller 
-public class MainController {
+@Controller
+@ApiIgnore
+public class ViewController {
 	
-	@ApiIgnore
 	@RequestMapping("/main")
 	public String mainPage() {
 		return "main";
 	}
 	
-	@ApiIgnore
 	@RequestMapping("/signup")
 	public String signupPage() {
 		return "signup";
+	}
+	
+	@RequestMapping("/todoMain")
+	public String todoPage() {
+		return "todo";
 	}
 	
 }

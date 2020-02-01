@@ -2,6 +2,7 @@ package com.kh.scheduler.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,13 +48,20 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody UserResponse login(@RequestBody User user) {
 		List<String> errors = new ArrayList<>();
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(user.getUserId(),user.getPassword())
-				);
-		System.out.println("aaa");
-		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		System.out.println("aaabbb");
-		return UserAdapter.toUserResponse("create user", errors);  	
+		User ResponseUser = null;
+		
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(user.getUserId(),user.getPassword())
+					);
+			SecurityContextHolder.getContext().setAuthentication(authentication); 
+			
+			ResponseUser = userService.read(user.getUserId());
+		} catch (Exception e) {
+			errors.add(e.getMessage());
+		}
+		
+		return UserAdapter.toUserResponse(ResponseUser, errors);  	
     }
 	
 	@ApiOperation(value = "user", notes = "사용자 추가")
@@ -66,10 +74,14 @@ public class UserController {
 	@PostMapping(value = "/user")
     public @ResponseBody UserResponse createUser(@RequestBody User user) {
 		List<String> errors = new ArrayList<>();
+		User resultUser = null;
 		
-		User resultUser = userService.add(user);
-		
-		return UserAdapter.toUserResponse("create user", errors);  	
+		try {
+			resultUser = userService.create(user);
+		} catch (Exception e) {
+			errors.add(e.getMessage());
+		}
+		return UserAdapter.toUserResponse(resultUser, errors);  	
     }
 	
 	@ApiOperation(value = "user", notes = "사용자 조회")
@@ -83,7 +95,7 @@ public class UserController {
     public @ResponseBody UserResponse readUser(String userid) {
 		List<String> errors = new ArrayList<>();
 		
-		return UserAdapter.toUserResponse("read user", errors);  	
+		return null;  	
     }
 	
 	@ApiOperation(value = "user", notes = "사용자 수정")
@@ -97,7 +109,7 @@ public class UserController {
     public @ResponseBody UserResponse updateUser(@RequestBody User user) {
 		List<String> errors = new ArrayList<>();
 		System.out.println("into addUser");
-		return UserAdapter.toUserResponse("update user", errors);  	
+		return null;  	
     }
 	
 	@ApiOperation(value = "user", notes = "사용자 삭제")
@@ -111,7 +123,7 @@ public class UserController {
     public @ResponseBody UserResponse deleteUser(String userId) {
 		List<String> errors = new ArrayList<>();
 		
-		return UserAdapter.toUserResponse("delete user", errors);  	
+		return null;
     }
 
 }

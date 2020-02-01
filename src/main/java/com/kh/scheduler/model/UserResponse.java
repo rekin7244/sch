@@ -7,11 +7,11 @@ import com.kh.scheduler.model.ToDoResponse.ToDoResponseBuilder;
 
 import lombok.Builder;
 
-public class UserResponse extends ApiResponse<String>{
+public class UserResponse extends ApiResponse<User>{
 
 	@Builder
-	public UserResponse(final String str, final List<String> errors) {
-		super(str);
+	public UserResponse(final User user, final List<String> errors) {
+		super(user);
 		this.setErrors(errors);
 	}
 }

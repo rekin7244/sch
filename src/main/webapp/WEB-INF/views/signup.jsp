@@ -25,12 +25,7 @@
 	<table align="center" height="40" width="430" border="0" style="border:solid 4px #A4A4A4; margin-top:4%"> 
          <tr>
              <td>
-              	<input type="text" id="userId" name="userId" value="" style="height:40px; width:350px;" placeholder="아이디를 입력하세요">
-             </td>
-             <td>
-             	<input type="button" name="login" value="중복확인" id="checkId"
-             	style="height:45px; width:80px;  background-color:#A4A4A4; color:white; font-size:16px; border:solid 1px #A4A4A4; ">
-             	<input type="hidden" id="checkIdNumber" value="0">
+              	<input type="text" id="userId" name="userId" value="" style="height:40px; width:430px;" placeholder="아이디를 입력하세요">
              </td>
          </tr> 
   	</table>
@@ -51,30 +46,6 @@
 <br><br><br><br><br>
 <script type="text/javascript">
 
-	var checkIdNumber = $("#checkIdNumber").val();
-	
-	$("#checkId").click(function(){
-		var userId = $("#userId").val();
-		console.log(userId);	
-		
-		$.ajax({
-			url:"checkId",
-			data:{accId:accId},
-			type:"post",
-			success:function(result){
-				console.log(result.checkId);
-				if(result.checkId == "Y"){
-					$("#checkIdNumber").val(0);
-					alert("이미 사용중인 아이디 입니다.")
-				}else{
-					$("#checkIdNumber").val(1);
-					alert("사용가능한 아이디 입니다.")
-				}
-
-			}
-		})
-	});
-	
 	function signup () {
 		var userId = $("#userId").val();
 		var password = $("#password").val();
@@ -95,7 +66,13 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			success:function(result){
-				
+				console.log(result)
+				if (result.data != null){
+					alert("Success sign up " + result.data.userId + " !")
+					document.location.href = "main";					
+				} else {
+					alert("Warning.. \n" + result.errors)
+				}
 			}
 		})
 	}

@@ -18,9 +18,6 @@ public class UserPrincipal implements UserDetails {
 	}
 	
 	public static UserPrincipal create(User user) {
-		
-		System.out.println("user.getpassword :: " + user);
-
         return new UserPrincipal(
                 user.getUserId(),
                 user.getPassword()

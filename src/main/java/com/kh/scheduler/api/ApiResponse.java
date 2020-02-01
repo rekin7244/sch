@@ -10,10 +10,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public abstract class ApiResponse<T> {
 
-	@NonNull private T data;
+	private T data;
 	private List<String> errors;
+
+	public ApiResponse(T data) {
+		super();
+		this.data = data;
+	}
 	
 	public void setErrors(List<String> errors) {
 		this.errors = errors;
 	}
+
 }
