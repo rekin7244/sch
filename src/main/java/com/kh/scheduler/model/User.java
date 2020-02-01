@@ -27,7 +27,7 @@ import lombok.ToString;
 public class User {
 	
 	@Id
-	@ApiModelProperty(value = "User Id", example = "user")
+	@ApiModelProperty(value = "User Id", example = "userId")
 	@Column(name="USERID")
 	private String userId;
 	@ApiModelProperty(value = "User Password", example = "password")

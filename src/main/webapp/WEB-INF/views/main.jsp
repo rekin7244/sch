@@ -74,7 +74,12 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			},
 			success:function(result){
-				
+				if (result.data != null){
+					alert("Welcome " + result.data.userId + " !")
+					document.location.href = "todoMain";					
+				} else {
+					alert("Warning.. \n" + result.errors)
+				}
 			}
 		})
 	}

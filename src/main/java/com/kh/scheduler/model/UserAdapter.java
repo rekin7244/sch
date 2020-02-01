@@ -4,8 +4,8 @@ import java.util.List;
 
 public class UserAdapter {
 	
-	public static UserResponse toUserResponse(final String str, final List<String> errors) {
-		return UserResponse.builder().str(str).errors(errors).build();
+	public static UserResponse toUserResponse(final User user, final List<String> errors) {
+		return UserResponse.builder().user(user).errors(errors).build();
 	}
 	
 	public static User toUser(final UserRequest userRequest) {
