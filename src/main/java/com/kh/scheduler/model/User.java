@@ -13,11 +13,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="user")
+@Table(name="SCH_USER")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,22 +27,11 @@ import lombok.ToString;
 public class User {
 	
 	@Id
-	@GeneratedValue(
-			strategy=GenerationType.SEQUENCE,
-			generator="user_seq_gen")
-	@SequenceGenerator(
-			name="user_seq_gen",
-			sequenceName="user_seq",
-			initialValue=1,
-			allocationSize=1)
-	@Column(name="id")
-	@ApiModelProperty(hidden = true)
-	private long id;
 	@ApiModelProperty(value = "User Id", example = "user")
-	@Column(name="userId")
+	@Column(name="USERID")
 	private String userId;
 	@ApiModelProperty(value = "User Password", example = "password")
-	@Column(name="password")
+	@Column(name="PASSWORD")
 	private String password;
 
 }
