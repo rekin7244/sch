@@ -1,14 +1,23 @@
 package com.kh.scheduler.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController 
+import springfox.documentation.annotations.ApiIgnore;
+
+@Controller 
 public class MainController {
-
-	@GetMapping("/main")
+	
+	@ApiIgnore
+	@RequestMapping("/main")
 	public String mainPage() {
 		return "main";
+	}
+	
+	@ApiIgnore
+	@RequestMapping("/signup")
+	public String signupPage() {
+		return "signup";
 	}
 	
 }

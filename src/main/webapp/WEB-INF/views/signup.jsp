@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="csrf-token" content="{{ csrf_token() }}"> 
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -19,42 +18,64 @@
 	<table align="center" height="90">
         <tr>
              <td>
-             	<div id="main-title">TO-DO<div>
+             	<div id="main-title">SIGN-UP<div>
              </td>
        </tr>
 	</table>
 	<table align="center" height="40" width="430" border="0" style="border:solid 4px #A4A4A4; margin-top:4%"> 
          <tr>
              <td>
-              	<input type="text" id="userId" name="userId" value="" style="height:40px; width:430px;" placeholder=" 아이디를 입력하세요">
+              	<input type="text" id="userId" name="userId" value="" style="height:40px; width:350px;" placeholder="아이디를 입력하세요">
+             </td>
+             <td>
+             	<input type="button" name="login" value="중복확인" id="checkId"
+             	style="height:45px; width:80px;  background-color:#A4A4A4; color:white; font-size:16px; border:solid 1px #A4A4A4; ">
+             	<input type="hidden" id="checkIdNumber" value="0">
              </td>
          </tr> 
   	</table>
 	<table align="center" height="40" width="430" border="0" style="border:solid 4px #A4A4A4; margin-top:1%"> 
          <tr>
              <td>
-              	<input type="password" id="password" name="password" value="" style="height:40px; width:430px" placeholder=" 비밀번호를 입력하세요">
+              	<input type="password" id="password" name="password" value="" style="height:40px; width:430px" placeholder="비밀번호를 입력하세요">
              </td>
          </tr>			
 	</table>
 	<table align="center" height="40" style="margin-top:1%">
 	     <tr>
 	         <td>
-	          	<input type="button" name="login" value="LOGIN" style="height:50px; width:450px;  background-color:#A4A4A4; color:white; font-size:16px; border:solid 1px #A4A4A4;" onclick="login()">
+	          	<input type="button" id="loginBtn" name="login" value="회원가입" style="height:50px; width:450px;  background-color:#A4A4A4; color:white; font-size:16px; border:solid 1px #A4A4A4;" onclick="signup()">
 	         </td>
 	     </tr> 
 	</table>
- 	<table align="center" height="0" width="440" border="1" style="border:solid 1px #A4A4A4; margin-top:2%">
-	</table>
- 	<table align="center" height="50" style="margin-top:1%" class="mo">
-	  	<tr>
-		   <td><a style="color:#A4A4A4; text-decoration:none;" href="signup">회원가입 | </td> 
-		   <td><a style="color:#A4A4A4; text-decoration:none;" href="findAccId">아이디 찾기 | </td>
-		   <td><a style="color:#A4A4A4; text-decoration:none;" href="주소">비밀번호 찾기</td>
-	  	</tr>
- 	</table>
+<br><br><br><br><br>
 <script type="text/javascript">
-	function login () {
+
+	var checkIdNumber = $("#checkIdNumber").val();
+	
+	$("#checkId").click(function(){
+		var userId = $("#userId").val();
+		console.log(userId);	
+		
+		$.ajax({
+			url:"checkId",
+			data:{accId:accId},
+			type:"post",
+			success:function(result){
+				console.log(result.checkId);
+				if(result.checkId == "Y"){
+					$("#checkIdNumber").val(0);
+					alert("이미 사용중인 아이디 입니다.")
+				}else{
+					$("#checkIdNumber").val(1);
+					alert("사용가능한 아이디 입니다.")
+				}
+
+			}
+		})
+	});
+	
+	function signup () {
 		var userId = $("#userId").val();
 		var password = $("#password").val();
 		
@@ -65,7 +86,7 @@
 		
 		console.log(userId);
 		$.ajax({
-			url:"/login",	
+			url:"/user",	
 			data : JSON.stringify(form),
 			type:"POST",
 			dataType: "json",
@@ -78,6 +99,7 @@
 			}
 		})
 	}
+
 </script>
 </body>
 </html>
