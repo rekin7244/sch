@@ -20,17 +20,47 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: sch
     password: sch
     driver-class-name: oracle.jdbc.driver.OracleDriver
 
-# HikariCP settings
-
-
-
+## logging settings
+#server log setting
+logging:
+  file:
+    name: /desktop/public/log/server/test_server.log
+  level:
+    com.kh.scheduler: warn
+    com.kh.scheduler.service: info
+    org:
+      apache: error
+      springframework: error
+      hibernate:
+        SQL: debug
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss
+    file: '%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p}
+      ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
+    level: '%5p'
+    rolling-file-name: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+#tomcat access log setting
+server:
+  port: 7070
+  tomcat:
+    accesslog:
+      directory: /log/access/
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      max-days: 14
+      pattern: '%h %l %u %t "%r" %s %b %D'
+      prefix: test_access
+      rotate: true
+      suffix: .log
+    basedir: /desktop/public
+#JPA(Hibernate) log setting
 
 
 
