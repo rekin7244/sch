@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import lombok.ToString;
 public class ToDo {
 	
 	@Id
+	@ApiModelProperty(value = "id", example = "numberBySequence")
 	@GeneratedValue(
 			strategy=GenerationType.SEQUENCE,
 			generator="todo_seq_gen")
@@ -34,11 +36,14 @@ public class ToDo {
 			allocationSize=1)
 	@Column(name="id")
 	private long id;
+	@ApiModelProperty(value = "title", example = "할일 내용")
 	@Column(name="title")
 	private String title;
+	@ApiModelProperty(value = "done", example = "Y or N")
 	@Column(name="done")
 	private String done;
-//	@Column(name="author")
-//	private String author;
+	@ApiModelProperty(value = "author", example = "user Id")
+	@Column(name="author")
+	private String author;
 	
 }

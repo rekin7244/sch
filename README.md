@@ -8,19 +8,26 @@
 > Java 8  
 > lombok (Slf4j)  
 > gradle  
-
+> swagger 2.9.2
 
 * * * 
 
 ## 구조
-
+ swagger-ui.html 참조  
 
 * * * 
 
 ## 알려진 문제점
- GET /todo/{id} : get by id 에서 jpa문제 존재
+ 
 
 ## Version Log
-##### 기능 추가 및 db연동
+#### 기능 추가 및 db연동
 GET /todo : 모든 todo  
 POST /todo : post로 todo(json객체) 전달하여 저장
+
+
+#### todo CRUD
+GET /todo : 사용자 todo list 조회  
+POST /todo : todo 추가  
+PUT /todo : todo 수정  
+DELETE /todo : todo 삭제  
