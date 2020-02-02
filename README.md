@@ -31,3 +31,7 @@ GET /todo : 사용자 todo list 조회
 POST /todo : todo 추가  
 PUT /todo : todo 수정  
 DELETE /todo : todo 삭제  
+
+#### logging 처리  
+access (embedded tomcat) logging  
+server(sql, error) logging  
